@@ -6,31 +6,33 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-CMD-check](https://github.com/mikmart/ggragged/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mikmart/ggragged/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/mikmart/ggragged/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mikmart/ggragged?branch=main)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/ggragged)](https://CRAN.R-project.org/package=ggragged)
 <!-- badges: end -->
 
 ggragged extends the faceting system in
-[ggplot2](https://ggplot2.tidyverse.org/) to ragged grids – a hybrid
+[ggplot2](https://ggplot2.tidyverse.org/) to ragged grids—a hybrid
 layout between `facet_wrap()` and `facet_grid()`.
 
-- `facet_ragged_rows()` groups panels into rows of (potentially) varying
-  lengths.
-- `facet_ragged_cols()` groups panels into columns of (potentially)
-  varying lengths.
+- `facet_ragged_rows()` groups panels into rows that can vary in length.
+- `facet_ragged_cols()` groups panels into columns that can vary in
+  length.
 
 ## Installation
 
-Install the current release from [CRAN](https://cran.r-project.org/):
+Install the current release from
+[CRAN](https://cran.r-project.org/package=ggragged):
 
 ``` r
 install.packages("ggragged")
 ```
 
 Or the development version from
-[GitHub](https://github.com/mikmart/ggragged/):
+[GitHub](https://github.com/mikmart/ggragged):
 
 ``` r
 remotes::install_github("mikmart/ggragged")
@@ -45,25 +47,14 @@ panel layout:
 library(ggplot2)
 library(ggragged)
 
-p <- ggplot(Indometh, aes(time, conc)) + geom_line()
-
-# Panels for each subject, with cohorts on separate rows
-p + facet_ragged_rows(
- vars(Cohort = 1 + Subject %in% 3:6),
- vars(Subject = as.character(Subject)),
- labeller = label_both
-)
+p <- ggplot(mpg, aes(displ, cty)) + geom_point()
+p + facet_ragged_rows(vars(drv), vars(cyl))
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
 ``` r
-# Panels for each subject, with cohorts in separate columns
-p + facet_ragged_cols(
- vars(Subject = as.character(Subject)),
- vars(Cohort = 1 + Subject %in% 3:6),
- labeller = label_both
-)
+p + facet_ragged_cols(vars(cyl), vars(drv))
 ```
 
 <img src="man/figures/README-example-2.png" width="100%" />
